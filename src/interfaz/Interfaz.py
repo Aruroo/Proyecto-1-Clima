@@ -6,7 +6,7 @@ from tkinter import messagebox
 class Interfaz(ttk.Frame):
 
     def __init__(self, raiz, lista):
-        """Metodo principal.
+        """Metodo para construir la interfaz.
 
         raiz = tt.Tk() - la ventana principal
 
