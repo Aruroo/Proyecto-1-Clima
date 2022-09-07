@@ -9,20 +9,20 @@ class Peticion:
         """
         try:
             #Leyendo la llave
-            rutaKey= open("key.txt", mode='r')
-            key=rutaKey.read()
-            rutaKey.close()
+            rutaLlave= open("key.txt", mode='r')
+            llave=rutaLlave.read()
+            rutaLlave.close()
             #Solicitando información
         except FileNotFoundError:
             print("archivo de llave no encontrado")    
         try:
             url = 'https://api.openweathermap.org/data/2.5/weather?lat='+str(lat)+'&lon='+str(lon)+'&units=metric&lang=es&appid='+key
             respuesta = requests.get(url)
-            diccionario = respuesta.json()
-            nombreArchivo = diccionario["name"]
+            diccionarioCiudad = respuesta.json()
+            nombreArchivo = diccionarioCiudad["name"]
             #guardamos la información que nos devolvió la request en un archivo
             with open("/home/arturo/Python projects/src/caché/peticiones/"+nombreArchivo+".json", "w") as i:
-                json.dump(diccionario,i, indent=2)
+                json.dump(diccionarioCiudad,i, indent=2)
         except ConnectionError:
             print("solicitud rechazada")        
            
