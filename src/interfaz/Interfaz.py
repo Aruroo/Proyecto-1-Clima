@@ -3,7 +3,7 @@ from tkinter import*
 from tkinter import ttk
 import tkinter as tk
 from tkinter import messagebox
-from clima.Peticion import Peticion
+from clima import Peticion
 
 class Interfaz(ttk.Frame):
 
@@ -14,7 +14,7 @@ class Interfaz(ttk.Frame):
 
         lista = list - una lista de paises.
 
-        TODO: implementar muestraClima()
+        TODO: recibir las ciudades del CSV
         """
         try:
             super().__init__(raiz)
@@ -54,6 +54,7 @@ class Interfaz(ttk.Frame):
         Despliega un label con el clima de la ciudad solicitada
         """
         try:
+            #TODO : modificar usando coordenadas de una ciudad en desplegable.get()
             solicitud = Peticion(19.4359713,-99.0725469)
             climaLabel = Label(cuadro, solicitud["name"])
             climaLabel.place(x=15,y=150) 
