@@ -1,7 +1,9 @@
+from functools import partial
 from tkinter import*
 from tkinter import ttk
 import tkinter as tk
 from tkinter import messagebox
+from clima.Peticion import Peticion
 
 class Interfaz(ttk.Frame):
 
@@ -33,19 +35,32 @@ class Interfaz(ttk.Frame):
             self.desplegable = ttk.Combobox(state="readonly", values=lista)
             self.desplegable.bind("<<ComboboxSelected>>",self.muestraEscogido)
             self.desplegable.place(x=50,y=70)
-
-            boton = ttk.Button(text="mostrar clima", command=self.muestraClima)
+            #un boton para crear un label con la información solicitada
+            boton = ttk.Button(text="mostrar clima", command=partial(self.muestraClima, self, cuadro))
             boton.place(x=280,y=65)
         except TypeError: 
             print("raiz no es un tt.Tk() o lista no es una lista")
 
 
     def muestraEscogido(self,event):
+            """
+            Muestra el elemento escogido en una ventanita
+            """    
             escogido = self.desplegable.get()
             messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
 
-    def muestraClima(self):
-        print("Work in progress")    
+    def muestraClima(self, event, cuadro : Frame):
+        """
+        Despliega un label con el clima de la ciudad solicitada
+        """
+        try:
+            solicitud = Peticion(19.4359713,-99.0725469)
+            climaLabel = Label(cuadro, solicitud["name"])
+            climaLabel.place(x=15,y=150) 
+        except ConnectionError:
+            print("conexión fallida")
+        
+
 
 
 raiz=tk.Tk()
