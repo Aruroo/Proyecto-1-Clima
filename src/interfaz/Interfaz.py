@@ -14,7 +14,7 @@ class Interfaz(ttk.Frame):
 
         lista = list - una lista de paises.
 
-        TODO: recibir las ciudades del CSV
+        TODO: recibir las ciudades con sus coordenadas del CSV
         """
         try:
             super().__init__(raiz)
@@ -56,7 +56,8 @@ class Interfaz(ttk.Frame):
         try:
             #TODO : modificar usando coordenadas de una ciudad en desplegable.get()
             solicitud = Peticion(19.4359713,-99.0725469)
-            climaLabel = Label(cuadro, solicitud["name"])
+            
+            climaLabel = Label()
             climaLabel.place(x=15,y=150) 
         except ConnectionError:
             print("conexión fallida")
