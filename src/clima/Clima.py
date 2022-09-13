@@ -74,19 +74,16 @@ class Clima ():
     def procesa_petición(ciudad):
         """
             Método que se encarga de procesar la petición o bien, arrojar datos de
-            la ciudad pasada como parámetro.
+            la ciudad pasada como parámetro por el usuario.
         """
 
-        """Ciudad de destino dado por el usuario (nombre): ciudad"""
-        #ciudad = ...
-
         """Busca en el diccionario las coordenadas"""
-        coordenadasciudad = funciónAux(ciudad)
+        coordenadasciudad = busca_ciudad(ciudad)
 
         """Revisar en caché: Bandera dada por la función auxiliar 2 para saber si
         la información solicitada se encuentra en caché. True si se encuentra la
         información en caché. False si no se encuentra la información en caché."""
-        bandera1 = funciónAux2(ciudad)
+        bandera1 = auxiliar(ciudad)
 
         if bandera1:
             """Devuelve el archivo .json que contiene los datos a recolectar necesarios."""
@@ -94,16 +91,16 @@ class Clima ():
         else:
             """Realizar petición para devolver un archivo .json."""
 
-    def auxiliar(ciudad):
+    def busca_ciudad(ciudad):
         """
             Función auxiliar que se encarga de realizar la búsqueda de coordenadas
             de la ciudad con base en su nombre pasado como parámetro, en el arreglo.
         """
         for i in range(1, arreglo_ciudades().length()):
-            if ciudad == arreglo_ciudades()[i].nombre:
+            if ciudad == arreglo_nombres()[i]:
                 return arreglo_ciudades()[i]
 
-    def auxiliar2(ciudad):
+    def auxiliar(ciudad):
         """
             Función auxiliar que se encarga de comprobar si la información de la
             ciudad dada comp parámetro se encuentra en caché. Devuelve True si se
