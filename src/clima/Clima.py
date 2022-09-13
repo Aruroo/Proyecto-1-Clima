@@ -3,51 +3,90 @@ import Ciudad
 
 class Clima ():
 
-    ciudades = []
+    #Diccionario de las ciudades
+    ciudades = {
+        #Arreglo donde almacena los nombres de las ciudades.
+        "nombres": [],
+
+        #Arreglo donde almacena los objetos de tipo Ciudad.
+        "coordenadas": []
+    }
 
     def __init__(self, ciudades):
-        #Arreglo para almacenar datos de tipo Ciudad.
+        #Diccionario para almacenar datos de las ciudades.
         self.ciudades = ciudades
 
-    with open('ciudades.csv') as f:
-        """
-            Almacena los datos del csv en un arreglo con datos de tipo Ciudad.
-        """
+    #Variable que evita añadir la primera linea del archivo csv.
+    b = False
+
+    #Realiza el almacenamiento de los nombres en un conjunto para evitar repeticiones.
+    with open('dataset1.csv') as f:
         reader = csv.reader(f)
+        conjunto = {}
+        conjunto = set()
+
+        #Almacena los nombres de las ciudades en un conjunto donde no se repetirán
+        #los nombres.
         for row1 in reader:
-            nombre1 = row1[0]
-            #Datos de la ciudad 1.
-            ciudad1 = Ciudad.Ciudad(row1[0], row1[2], row1[4])
+            if b:
+                conjunto.add(row1[0])
+                conjunto.add(row1[1])
+            b = True
 
-            #Añade la información de la nueva ciudad.
-            ciudades.append(ciudad1)
+        b = False
 
-            for row2 in reader:
-                nombre2 = row2[1]
+    #Realiza el almacenamiento de las ciudades en el diccionario con base en el conjunto obtenido.
+    with open('dataset1.csv') as f:
+        reader = csv.reader(f)
+        for row2 in reader:
+            if b:
+                #Revisa para la primer ciudad que aparece en la fila correspondiente en el .csv.
+                if row2[0] in conjunto:
+                    #Primer arreglo para los nombres.
+                    ciudades["nombres"].append(row2[0])
 
-                if nombre1 != nombre2:
-                    #Datos de la ciudad 2.
-                    ciudad2 = Ciudad.Ciudad(row2[1], row2[3],row2[5])
+                    #Segundo arreglo para objetos de tipo Ciudad.
+                    ciudades["coordenadas"].append(Ciudad.Ciudad(row2[0], row2[2], row2[4]))
+                    conjunto.discard(row2[0])
 
-                    #Añade la información de la nueva ciudad.
-                    ciudades.append(ciudad2)
+                #Revisa para la primer ciudad que aparece en la fila correspondiente en el .csv.
+                if row2[1] in conjunto:
+                    #Primer arreglo para los nombres.
+                    ciudades["nombres"].append(row2[1])
 
-    def método1():
+                    #Segundo arreglo para objetos de tipo Ciudad.
+                    ciudades["coordenadas"].append(Ciudad.Ciudad(row2[1], row2[3], row2[5]))
+                    conjunto.discard(row2[1])
+            b = True
+
+    def arreglo_ciudades():
+        """
+            Devuelve un arreglo con los nombres de las ciudades.
+        """
+        return ciudades["nombres"]
+
+    def arreglo_ciudades():
+        """
+            Devuelve un arreglo con los objetos de tipo Ciudad.
+        """
+        return ciudades["coordenadas"]
+
+    def procesa_petición(ciudad):
         """
             Método que se encarga de procesar la petición o bien, arrojar datos de
-            la ciudad dada por el usuario en la interfaz
+            la ciudad pasada como parámetro.
         """
 
-        """Ciudad de destino dado por el usuario (nombre): ciudaddestino"""
-        #ciudaddestino = ...
+        """Ciudad de destino dado por el usuario (nombre): ciudad"""
+        #ciudad = ...
 
         """Busca en el diccionario las coordenadas"""
-        coordenadasciudad = funciónAux(ciudaddestino)
+        coordenadasciudad = funciónAux(ciudad)
 
         """Revisar en caché: Bandera dada por la función auxiliar 2 para saber si
         la información solicitada se encuentra en caché. True si se encuentra la
         información en caché. False si no se encuentra la información en caché."""
-        bandera1 = funciónAux2(ciudaddestino)
+        bandera1 = funciónAux2(ciudad)
 
         if bandera1:
             """Devuelve el archivo .json que contiene los datos a recolectar necesarios."""
@@ -55,17 +94,16 @@ class Clima ():
         else:
             """Realizar petición para devolver un archivo .json."""
 
-
-    def funciónAux(ciudad):
+    def auxiliar(ciudad):
         """
             Función auxiliar que se encarga de realizar la búsqueda de coordenadas
             de la ciudad con base en su nombre pasado como parámetro, en el arreglo.
         """
-        for i in range(1, ciudades.length()):
-            if ciudad == ciudades[i].nombre:
-                return ciudades[i]
+        for i in range(1, arreglo_ciudades().length()):
+            if ciudad == arreglo_ciudades()[i].nombre:
+                return arreglo_ciudades()[i]
 
-    def funciónAux2(ciudad):
+    def auxiliar2(ciudad):
         """
             Función auxiliar que se encarga de comprobar si la información de la
             ciudad dada comp parámetro se encuentra en caché. Devuelve True si se
@@ -73,7 +111,7 @@ class Clima ():
         """
         return False
 
-    def método2():
+    def recolecta_info():
         """
             Método que se encarga de recolectar los datos necesarios del archivo
             .json dado por el método anterior.
