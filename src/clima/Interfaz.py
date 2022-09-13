@@ -1,11 +1,12 @@
-from clima.Peticion import Peticion
+import Peticion
+import Ciudad
+import Clima
 from functools import partial
 from tkinter import*
 from tkinter import ttk
 import tkinter as tk
 from tkinter import messagebox
-from clima.Clima import Clima
- 
+
 
 class Interfaz(ttk.Frame):
 
@@ -48,14 +49,14 @@ class Interfaz(ttk.Frame):
                 print("no se ha seleccionado ciudad")
                 messagebox.showinfo(title="Selección",message="No ha seleccionado ninguna ciudad")
             boton.place(x=280,y=65)
-        except TypeError: 
+        except TypeError:
             print("raiz no es un tt.Tk() o lista no es una lista")
 
 
     def muestraEscogido(self,event):
             """
             Muestra el elemento escogido en una ventanita
-            """    
+            """
             escogido = self.desplegable.get()
             messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
 
@@ -66,12 +67,12 @@ class Interfaz(ttk.Frame):
         try:
             #TODO : modificar usando coordenadas de una ciudad en desplegable.get()
             solicitud = Peticion(lat,lon,nombre)
-                
+
             climaLabel = Label()
-            climaLabel.place(x=15,y=150) 
+            climaLabel.place(x=15,y=150)
         except ConnectionError:
             print("conexión fallida")
-        
+
 
 
 
@@ -79,4 +80,3 @@ raiz=tk.Tk()
 lista= Clima.arregloNombres()
 objeto = Interfaz(raiz, lista)
 objeto.mainloop()
-
