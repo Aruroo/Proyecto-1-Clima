@@ -23,7 +23,7 @@ class Peticion:
             url = 'https://api.openweathermap.org/data/2.5/weather?lat='+str(lat)+'&lon='+str(lon)+'&units=metric&lang=es&appid='+llave
             respuesta = requests.get(url)
             diccionarioCiudad = respuesta.json()
-            ruta = "/caché/peticiones/"+ciudadNombre+".json"
+            ruta = "/home/arturo/Proyectos de Python/src/caché/peticiones/"+ciudadNombre+".json"
             # Checando fecha y hora para saber cuando almacenar en el caché:
             fecha = datetime.now()
             #checando si el archivo existe en el caché:

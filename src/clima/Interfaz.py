@@ -1,11 +1,12 @@
-import Peticion
-import Ciudad
-import Clima
+import imp
+from Peticion import Peticion
 from functools import partial
 from tkinter import*
 from tkinter import ttk
 import tkinter as tk
 from tkinter import messagebox
+
+from Climas import Climas
 
 
 class Interfaz(ttk.Frame):
@@ -30,6 +31,7 @@ class Interfaz(ttk.Frame):
             #configurando Frame
             cuadro=Frame(width=650, height= 500,bd=10,relief="groove",bg="light blue")
             cuadro.pack()
+            self.cuadro = cuadro
             #Label de Ciudad de destino
             ciudadOrigenLabel=Label(cuadro, text='Seleccione la ciudad para consultar su clima:',
                          justify="center",bg="light blue", fg='blue', font=("Purisa", 18))
@@ -39,35 +41,30 @@ class Interfaz(ttk.Frame):
             self.desplegable.bind("<<ComboboxSelected>>",self.muestraEscogido)
             self.desplegable.place(x=50,y=70)
             #un boton para crear un label con la información solicitada
-            try:
-                nombreCiudad=self.desplegable.get()
-                ciudad = Clima.buscaCiudad(nombreCiudad)
-
-                boton = ttk.Button(text="mostrar clima", command=partial(self.muestraClima,
-                                         self, cuadro, ciudad.latitud,ciudad.altitud, nombreCiudad))
-            except:
-                print("no se ha seleccionado ciudad")
-                messagebox.showinfo(title="Selección",message="No ha seleccionado ninguna ciudad")
-            boton.place(x=280,y=65)
         except TypeError:
             print("raiz no es un tt.Tk() o lista no es una lista")
 
 
     def muestraEscogido(self,event):
             """
-            Muestra el elemento escogido en una ventanita
+            Muestra el elemento escogido en una ventanita, además, crea un botón.
             """
+            #el elemento escogido por el usuario.
             escogido = self.desplegable.get()
+            #mensaje para saber cual es el elemento escogido por el usuario
             messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
+            climas =Climas()
+            ciudad = climas.buscaCiudad(escogido)
+            boton = ttk.Button(text="mostrar clima", command=partial(self.muestraClima,
+                                         self, self.cuadro, ciudad.latitud,ciudad.altitud, escogido))
+            boton.place(x=280,y=65)
 
     def muestraClima(self, event, cuadro : Frame, lat:float,lon:float, nombre):
         """
         Despliega un label con el clima de la ciudad solicitada
         """
         try:
-            #TODO : modificar usando coordenadas de una ciudad en desplegable.get()
             solicitud = Peticion(lat,lon,nombre)
-
             climaLabel = Label()
             climaLabel.place(x=15,y=150)
         except ConnectionError:
@@ -77,6 +74,7 @@ class Interfaz(ttk.Frame):
 
 
 raiz=tk.Tk()
-lista= Clima.arregloNombres()
+ciudades = Climas()
+lista = ciudades.arregloNombres()
 objeto = Interfaz(raiz, lista)
 objeto.mainloop()
