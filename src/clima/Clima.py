@@ -59,57 +59,23 @@ class Clima ():
                     conjunto.discard(row2[1])
             b = True
 
-    def arreglo_nombres():
+    def arregloNombres():
         """
             Devuelve un arreglo con los nombres de las ciudades.
         """
         return ciudades["nombres"]
 
-    def arreglo_ciudades():
+    def arregloCiudades():
         """
             Devuelve un arreglo con los objetos de tipo Ciudad.
         """
         return ciudades["coordenadas"]
 
-    def procesa_petición(ciudad):
-        """
-            Método que se encarga de procesar la petición o bien, arrojar datos de
-            la ciudad pasada como parámetro por el usuario.
-        """
-
-        """Busca en el diccionario las coordenadas"""
-        coordenadasciudad = busca_ciudad(ciudad)
-
-        """Revisar en caché: Bandera dada por la función auxiliar 2 para saber si
-        la información solicitada se encuentra en caché. True si se encuentra la
-        información en caché. False si no se encuentra la información en caché."""
-        bandera1 = auxiliar(ciudad)
-
-        if bandera1:
-            """Devuelve el archivo .json que contiene los datos a recolectar necesarios."""
-
-        else:
-            """Realizar petición para devolver un archivo .json."""
-
-    def busca_ciudad(ciudad):
+    def buscaCiudad(ciudad):
         """
             Función auxiliar que se encarga de realizar la búsqueda de coordenadas
             de la ciudad con base en su nombre pasado como parámetro, en el arreglo.
         """
-        for i in range(1, arreglo_ciudades().length()):
-            if ciudad == arreglo_nombres()[i]:
-                return arreglo_ciudades()[i]
-
-    def auxiliar(ciudad):
-        """
-            Función auxiliar que se encarga de comprobar si la información de la
-            ciudad dada comp parámetro se encuentra en caché. Devuelve True si se
-            encuentra en caché o False si no está en caché.
-        """
-        return False
-
-    def recolecta_info():
-        """
-            Método que se encarga de recolectar los datos necesarios del archivo
-            .json dado por el método anterior.
-        """
+        for i in range(1, arregloCiudades().length()):
+            if ciudad == arregloNombres()[i]:
+                return arregloCiudades()[i]
