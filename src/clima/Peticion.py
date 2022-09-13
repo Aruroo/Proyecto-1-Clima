@@ -24,22 +24,20 @@ class Peticion:
             respuesta = requests.get(url)
             diccionarioCiudad = respuesta.json()
             ruta = "/home/arturo/Proyectos de Python/src/caché/peticiones/"+ciudadNombre+".json"
-
             # Checando fecha y hora para saber cuando almacenar en el caché:
             fecha = datetime.now()
-            diccionarioCiudad["minuto"] = fecha.minute
-
             #checando si el archivo existe en el caché:
             existeArchivo = os.path.isfile(ruta)
-
             if(existeArchivo):
                 with open(ruta) as file:
                     info = json.load(file)
                     #Actualizamos el caché cada 3 minutos
                     if(info["minuto"]+3<fecha.minute):
+                        diccionarioCiudad["minuto"] = fecha.minute #creemos una llave para minuto
                         self.creaArchivo(diccionarioCiudad,ruta)
             else:
                 #guardamos la información que nos devolvió la request en un archivo
+                diccionarioCiudad["minuto"] = fecha.minute #creemos una llave para minuto
                 self.creaArchivo(diccionarioCiudad,ruta)
 
         except ConnectionError:

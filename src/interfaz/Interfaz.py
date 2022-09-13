@@ -1,9 +1,11 @@
+from clima.Peticion import Peticion
 from functools import partial
 from tkinter import*
 from tkinter import ttk
 import tkinter as tk
 from tkinter import messagebox
-from clima import Peticion
+from clima.Clima import Clima
+ 
 
 class Interfaz(ttk.Frame):
 
@@ -36,7 +38,15 @@ class Interfaz(ttk.Frame):
             self.desplegable.bind("<<ComboboxSelected>>",self.muestraEscogido)
             self.desplegable.place(x=50,y=70)
             #un boton para crear un label con la información solicitada
-            boton = ttk.Button(text="mostrar clima", command=partial(self.muestraClima, self, cuadro))
+            try:
+                nombreCiudad=self.desplegable.get()
+                ciudad = Clima.buscaCiudad(nombreCiudad)
+
+                boton = ttk.Button(text="mostrar clima", command=partial(self.muestraClima,
+                                         self, cuadro, ciudad.latitud,ciudad.altitud, nombreCiudad))
+            except:
+                print("no se ha seleccionado ciudad")
+                messagebox.showinfo(title="Selección",message="No ha seleccionado ninguna ciudad")
             boton.place(x=280,y=65)
         except TypeError: 
             print("raiz no es un tt.Tk() o lista no es una lista")
@@ -49,14 +59,14 @@ class Interfaz(ttk.Frame):
             escogido = self.desplegable.get()
             messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
 
-    def muestraClima(self, event, cuadro : Frame):
+    def muestraClima(self, event, cuadro : Frame, lat:float,lon:float, nombre):
         """
         Despliega un label con el clima de la ciudad solicitada
         """
         try:
             #TODO : modificar usando coordenadas de una ciudad en desplegable.get()
-            solicitud = Peticion(19.4359713,-99.0725469)
-            
+            solicitud = Peticion(lat,lon,nombre)
+                
             climaLabel = Label()
             climaLabel.place(x=15,y=150) 
         except ConnectionError:
@@ -66,7 +76,7 @@ class Interfaz(ttk.Frame):
 
 
 raiz=tk.Tk()
-lista=["Mexico", "Canada", "Estados Unidos"]
+lista= Clima.arregloNombres()
 objeto = Interfaz(raiz, lista)
 objeto.mainloop()
 
