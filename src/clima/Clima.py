@@ -59,7 +59,7 @@ class Clima ():
                     conjunto.discard(row2[1])
             b = True
 
-    def arreglo_ciudades():
+    def arreglo_nombres():
         """
             Devuelve un arreglo con los nombres de las ciudades.
         """
