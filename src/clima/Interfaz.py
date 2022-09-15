@@ -32,7 +32,7 @@ class Interfaz(ttk.Frame):
             self.cuadro = cuadro
             #Label de Ciudad de destino
             ciudadOrigenLabel=Label(cuadro, text='Seleccione la ciudad para consultar su clima:',
-                         justify="center",bg="light blue", fg='blue', font=("Purisa", 18))
+                         justify="center",bg="light blue", fg='blue', font=("C059", 18))
             ciudadOrigenLabel.place(x=15, y=5)
             #Creando un menú desplegable
             self.desplegable = ttk.Combobox(state="readonly", values=lista)
@@ -72,14 +72,14 @@ class Interfaz(ttk.Frame):
                 descripcion = climainfo[0]["description"] 
                 #un label muy extenso
                 climaLabel = Label(self.cuadro,
-                     text="Temperatura:  "+ str(info['main']['temp'])
-                     +"\n"+"Máxima de  "+ str(info["main"]["temp_max"])
-                     +"\n"+"Mínima de  " + str(info["main"]["temp_min"])
+                     text="Temperatura:  "+ str(info['main']['temp'])+ " °C"
+                     +"\n"+"Máxima de  "+ str(info["main"]["temp_max"])+ " °C"
+                     +"\n"+"Mínima de  " + str(info["main"]["temp_min"])+ " °C"
                      +"\n"+ descripcion+ "\n"+ "Percepción térmica: "
-                     + str(info["main"]["feels_like"]),
-                     justify= "center",bg="pink" ,
-                     fg="blue", font=("Purisa",18))
-                climaLabel.place(x=15,y=140)      
+                     + str(info["main"]["feels_like"])+ " °C",
+                     justify= "center",bg="light blue" ,
+                     fg="black", font=("C059",18))
+                climaLabel.place(x=160,y=140)      
         except FileNotFoundError:
              print("Archivo json no encontrado")
 

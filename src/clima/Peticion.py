@@ -14,6 +14,8 @@ class Peticion:
             ciudadNombre = string - la ciudad correspondiente a las coordenadas dadas
 
         """
+        cantidadPeticiones = 0
+        self.cantidadPeticiones = cantidadPeticiones
         try:
             #Leyendo la llave
             rutaLlave= open("key.txt", mode='r')
@@ -57,6 +59,11 @@ class Peticion:
 
     def __creaArchivo(self,diccionarioCiudad,ruta):
         """Funcion para crear archivo"""
+        if(self.cantidadPeticiones >3000):
+            print("Máximo de solicitudes alcanzado")
+            return
+            
+        self.cantidadPeticiones= self.cantidadPeticiones+1
         with open(ruta, "w") as i:
                     json.dump(diccionarioCiudad,i, indent=2)
 
