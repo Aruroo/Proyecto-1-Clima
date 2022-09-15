@@ -1,11 +1,10 @@
-import imp
+import json
 from Peticion import Peticion
 from functools import partial
 from tkinter import*
 from tkinter import ttk
 import tkinter as tk
 from tkinter import messagebox
-
 from Climas import Climas
 
 
@@ -18,7 +17,6 @@ class Interfaz(ttk.Frame):
 
         lista = list - una lista de paises.
 
-        TODO: recibir las ciudades con sus coordenadas del CSV
         """
         try:
             super().__init__(raiz)
@@ -38,14 +36,14 @@ class Interfaz(ttk.Frame):
             ciudadOrigenLabel.place(x=15, y=5)
             #Creando un menú desplegable
             self.desplegable = ttk.Combobox(state="readonly", values=lista)
-            self.desplegable.bind("<<ComboboxSelected>>",self.muestraEscogido)
+            self.desplegable.bind("<<ComboboxSelected>>",self.__muestraEscogido)
             self.desplegable.place(x=50,y=70)
             #un boton para crear un label con la información solicitada
         except TypeError:
             print("raiz no es un tt.Tk() o lista no es una lista")
 
 
-    def muestraEscogido(self,event):
+    def __muestraEscogido(self,event):
             """
             Muestra el elemento escogido en una ventanita, además, crea un botón.
             """
@@ -55,20 +53,35 @@ class Interfaz(ttk.Frame):
             messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
             climas =Climas()
             ciudad = climas.buscaCiudad(escogido)
-            boton = ttk.Button(text="mostrar clima", command=partial(self.muestraClima,
+            #Creando un botón que al presionarse, ejecuta el método "muestra clima"
+            boton = ttk.Button(text="mostrar clima", command=partial(self.__muestraClima,
                                          self, self.cuadro, ciudad.latitud,ciudad.altitud, escogido))
             boton.place(x=280,y=65)
 
-    def muestraClima(self, event, cuadro : Frame, lat:float,lon:float, nombre):
+    def __muestraClima(self,event, cuadro : Frame, lat:float,lon:float, nombre):
         """
         Despliega un label con el clima de la ciudad solicitada
         """
         try:
             solicitud = Peticion(lat,lon,nombre)
-            climaLabel = Label()
-            climaLabel.place(x=15,y=150)
-        except ConnectionError:
-            print("conexión fallida")
+            ruta = "../caché/peticiones/"+nombre+".json"
+            with open(ruta, 'r') as j:
+                info = json.load(j)
+                #weather devuelve una lista cuyo unico elemento es un diccionario
+                climainfo = info['weather']
+                descripcion = climainfo[0]["description"] 
+                #un label muy extenso
+                climaLabel = Label(self.cuadro,
+                     text="Temperatura:  "+ str(info['main']['temp'])
+                     +"\n"+"Máxima de  "+ str(info["main"]["temp_max"])
+                     +"\n"+"Mínima de  " + str(info["main"]["temp_min"])
+                     +"\n"+ descripcion+ "\n"+ "Percepción térmica: "
+                     + str(info["main"]["feels_like"]),
+                     justify= "center",bg="pink" ,
+                     fg="blue", font=("Purisa",18))
+                climaLabel.place(x=15,y=140)      
+        except FileNotFoundError:
+             print("Archivo json no encontrado")
 
 
 

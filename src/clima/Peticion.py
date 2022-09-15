@@ -6,10 +6,13 @@ class Peticion:
 
     def __init__(self, lat:float, lon:float, ciudadNombre):
         """Método que hace la petición a OpenWheather
+
             alt = float -la altitud de la ciudad a la que queremos solicitar el clima
+
             long = float -la longitud de la ciudad a la que queremos solicitar el clima
+
             ciudadNombre = string - la ciudad correspondiente a las coordenadas dadas
-            TODO: Corregir la ruta absoluta por ruta relativa
+
         """
         try:
             #Leyendo la llave
@@ -23,7 +26,7 @@ class Peticion:
             url = 'https://api.openweathermap.org/data/2.5/weather?lat='+str(lat)+'&lon='+str(lon)+'&units=metric&lang=es&appid='+llave
             respuesta = requests.get(url)
             diccionarioCiudad = respuesta.json()
-            ruta = "/home/arturo/Proyectos de Python/src/caché/peticiones/"+ciudadNombre+".json"
+            ruta = "../caché/peticiones/"+ciudadNombre+".json"
             # Checando fecha y hora para saber cuando almacenar en el caché:
             fecha = datetime.now()
             #checando si el archivo existe en el caché:
@@ -34,16 +37,18 @@ class Peticion:
                     #Actualizamos el caché cada 3 minutos
                     if(info["minuto"]+3<fecha.minute):
                         diccionarioCiudad["minuto"] = fecha.minute #creemos una llave para minuto
-                        self.creaArchivo(diccionarioCiudad,ruta)
+                        self.__creaArchivo(diccionarioCiudad, ruta)
             else:
                 #guardamos la información que nos devolvió la request en un archivo
                 diccionarioCiudad["minuto"] = fecha.minute #creemos una llave para minuto
-                self.creaArchivo(diccionarioCiudad,ruta)
+                self.__creaArchivo(diccionarioCiudad, ruta)
 
         except ConnectionError:
             print("solicitud rechazada")
 
-    def creaArchivo(self,diccionarioCiudad,ruta):
-        """Funcion auxiliar para crear archivo"""
+    def __creaArchivo(self,diccionarioCiudad,ruta):
+        """Funcion para crear archivo"""
         with open(ruta, "w") as i:
                     json.dump(diccionarioCiudad,i, indent=2)
+
+    
