@@ -72,7 +72,7 @@ class Interfaz(ttk.Frame):
                 descripcion = climainfo[0]["description"] 
                 #un label muy extenso
                 climaLabel = Label(self.cuadro,
-                     text="Temperatura:  "+ str(info['main']['temp'])
+                     text="Temperatura (grados centígrados) :  "+ str(info['main']['temp'])
                      +"\n"+"Máxima de  "+ str(info["main"]["temp_max"])
                      +"\n"+"Mínima de  " + str(info["main"]["temp_min"])
                      +"\n"+ descripcion+ "\n"+ "Percepción térmica: "
