@@ -1,6 +1,6 @@
 import unittest
 import os
-from clima import Peticion
+from Peticion import Peticion
 class TestPeticion(unittest.TestCase):
 
     def test_peticion_correcta(self):
