@@ -26,7 +26,7 @@ class Peticion:
             url = 'https://api.openweathermap.org/data/2.5/weather?lat='+str(lat)+'&lon='+str(lon)+'&units=metric&lang=es&appid='+llave
             respuesta = requests.get(url)
             diccionarioCiudad = respuesta.json()
-            ruta = "../caché/peticiones/"+ciudadNombre+".json"
+            ruta = "../caché/"+ciudadNombre+".json"
             #checando si el archivo existe en el caché:
             existeArchivo = os.path.isfile(ruta)
             if(existeArchivo):
@@ -85,4 +85,4 @@ class Peticion:
             return True
         if(minuto > fechas["minuto"]+5):
             return True
-        return False
+        return False  

@@ -1,9 +1,9 @@
 import unittest
 import os
 from Peticion import Peticion
-class TestPeticion(unittest.TestCase):
+class PruebaPeticion(unittest.TestCase):
 
-    def test_peticion_correcta(self):
+    def pruebaPeticionCorrecta(self):
         """
         Prueba que se creen archivos JSON de forma satisfactoria
         dada una entrada con datos correctos.
@@ -12,7 +12,7 @@ class TestPeticion(unittest.TestCase):
         ruta = "../caché/peticiones/Ciencias"+".json"
         self.assertTrue(os.path.isfile(ruta))
 
-    def test_peticion_incorrecta(self):
+    def pruebaPeticionIncorrecta(self):
         """
         Prueba que se haga la petición, aún teniendo coordenadas incorrectas
         """
@@ -20,7 +20,7 @@ class TestPeticion(unittest.TestCase):
         ruta = "../caché/peticiones/Ciencias"+".json"
         self.assertTrue(os.path.isfile(ruta))   
 
-    def test_necesita_actualizase(self):
+    def pruebaNecesitaActualizase(self):
        """
        Prueba que el método necesitaActualizarse(self, dict)
        funcione correctamente.

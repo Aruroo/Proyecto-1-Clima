@@ -2,9 +2,9 @@ import unittest
 import csv
 from Ciudad import Ciudad
 from Climas import Climas
-class TestClima(unittest.TestCase):
+class PruebaClima(unittest.TestCase):
 
-    def testConstructorCiudad(self):
+    def pruebaConstructorCiudad(self):
         """
         Prueba que el constructor de la ciudad sea correcto.
         """
@@ -13,7 +13,7 @@ class TestClima(unittest.TestCase):
         self.assertEqual(ciudad.latitud, 90.0, 'Diferencia entre latitudes')
         self.assertEqual(ciudad.altitud, -10.0, 'Diferencia entre altitudes')
 
-    def testClima1(self):
+    def pruebaClima1(self):
         """
         Prueba que el diccionario no contenga elementos repetidos.
         """
@@ -56,7 +56,7 @@ class TestClima(unittest.TestCase):
 
         self.assertEqual(len(arreglo2), 0, 'El arreglo de objetos tipo Ciudad no quedó vacío o hay elementos repetidos')
 
-    def testBuscaCiudad(self):
+    def pruebaBuscaCiudad(self):
         """
         Prueba que la función de buscaCiudad() no devuelva algo al pasarle como parmámetro una ciudad que no está dentro del diccionario.
         """

@@ -64,7 +64,7 @@ class Interfaz(ttk.Frame):
         """
         try:
             solicitud = Peticion(lat,lon,nombre)
-            ruta = "../caché/peticiones/"+nombre+".json"
+            ruta = "../caché/"+nombre+".json"
             with open(ruta, 'r') as j:
                 info = json.load(j)
                 #weather devuelve una lista cuyo unico elemento es un diccionario
