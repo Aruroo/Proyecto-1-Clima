@@ -17,24 +17,20 @@ class Peticion:
         cantidadPeticiones = 0
         self.cantidadPeticiones = cantidadPeticiones
         try:
-            #Leyendo la llave
             rutaLlave= open("key.txt", mode='r')
             llave=rutaLlave.read()
             rutaLlave.close()
         except FileNotFoundError:
             print("archivo de llave no encontrado")
         try:
-            #Solicitando información
             url = 'https://api.openweathermap.org/data/2.5/weather?lat='+str(lat)+'&lon='+str(lon)+'&units=metric&lang=es&appid='+llave
             respuesta = requests.get(url)
             diccionarioCiudad = respuesta.json()
-            ruta = "../caché/peticiones/"+ciudadNombre+".json"
-            #checando si el archivo existe en el caché:
+            ruta = "../caché/peticiones/"+ciudadNombre+".json"
             existeArchivo = os.path.isfile(ruta)
             if(existeArchivo):
                 with open(ruta) as file:
                     info = json.load(file)
-                    #Actualizamos el caché cada 5 minutos
                     if(Peticion.__necesitaActualizarse(self, fechas=info)):
                         fecha = datetime.now()
                         diccionarioCiudad["ano"] = fecha.year
@@ -44,14 +40,12 @@ class Peticion:
                         diccionarioCiudad["minuto"] =fecha.minute
                         self.__creaArchivo(diccionarioCiudad, ruta)
             else:
-                # Checando fecha y hora para saber cuando almacenar en el caché:
                 fecha = datetime.now()
                 diccionarioCiudad["ano"] = fecha.year
                 diccionarioCiudad["mes"] = fecha.month                    
                 diccionarioCiudad["dia"] =fecha.day
                 diccionarioCiudad["hora"] =fecha.hour
                 diccionarioCiudad["minuto"] =fecha.minute
-                #guardamos la información que nos devolvió la request en un archivo
                 self.__creaArchivo(diccionarioCiudad, ruta)
 
         except ConnectionError:
@@ -92,4 +86,4 @@ class Peticion:
             return True
         if(minuto > fechas["minuto"]+5):
             return True
-        return False
+        return False  
