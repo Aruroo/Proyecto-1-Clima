@@ -20,25 +20,19 @@ class Interfaz(ttk.Frame):
         """
         try:
             super().__init__(raiz)
-            self.lista=lista
-            #configurando la ventana
             raiz.title("Clima")
             raiz.resizable(False,False)
             raiz.geometry("700x500")
             raiz.config(bg="light blue")
-            #configurando Frame
             cuadro=Frame(width=650, height= 500,bd=10,relief="groove",bg="light blue")
             cuadro.pack()
             self.cuadro = cuadro
-            #Label de Ciudad de destino
-            ciudadOrigenLabel=Label(cuadro, text='Seleccione la ciudad para consultar su clima:',
+            aeropuertoOrigenLabel=Label(cuadro, text='Seleccione la ciudad para consultar su clima:',
                          justify="center",bg="light blue", fg='blue', font=("Purisa", 18))
-            ciudadOrigenLabel.place(x=15, y=5)
-            #Creando un menú desplegable
-            self.desplegable = ttk.Combobox(state="readonly", values=lista)
-            self.desplegable.bind("<<ComboboxSelected>>",self.__muestraEscogido)
-            self.desplegable.place(x=50,y=70)
-            #un boton para crear un label con la información solicitada
+            aeropuertoOrigenLabel.place(x=15, y=5)
+            self.__desplegable = ttk.Combobox(state="readonly", values=lista)
+            self.__desplegable.bind("<<ComboboxSelected>>",self.__muestraEscogido)
+            self.__desplegable.place(x=50,y=70)
         except TypeError:
             print("raiz no es un tt.Tk() o lista no es una lista")
 
@@ -47,13 +41,10 @@ class Interfaz(ttk.Frame):
             """
             Muestra el elemento escogido en una ventanita, además, crea un botón.
             """
-            #el elemento escogido por el usuario.
-            escogido = self.desplegable.get()
-            #mensaje para saber cual es el elemento escogido por el usuario
+            escogido = self.__desplegable.get()
             messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
             climas =Climas()
             ciudad = climas.buscaCiudad(escogido)
-            #Creando un botón que al presionarse, ejecuta el método "muestra clima"
             boton = ttk.Button(text="mostrar clima", command=partial(self.__muestraClima,
                                          self, self.cuadro, ciudad.latitud,ciudad.altitud, escogido))
             boton.place(x=280,y=65)
@@ -64,19 +55,17 @@ class Interfaz(ttk.Frame):
         """
         try:
             solicitud = Peticion(lat,lon,nombre)
-            ruta = "../caché/"+nombre+".json"
+            ruta = "../caché/peticiones/"+nombre+".json"
             with open(ruta, 'r') as j:
                 info = json.load(j)
-                #weather devuelve una lista cuyo unico elemento es un diccionario
                 climainfo = info['weather']
                 descripcion = climainfo[0]["description"] 
-                #un label muy extenso
                 climaLabel = Label(self.cuadro,
-                     text="Temperatura (grados centígrados) :  "+ str(info['main']['temp'])
-                     +"\n"+"Máxima de  "+ str(info["main"]["temp_max"])
-                     +"\n"+"Mínima de  " + str(info["main"]["temp_min"])
+                     text="Temperatura :  "+ str(info['main']['temp'] )+"°C"
+                     +"\n"+"Máxima de  "+ str(info["main"]["temp_max"])+ "°C"
+                     +"\n"+"Mínima de  " + str(info["main"]["temp_min"])+ "°C"
                      +"\n"+ descripcion+ "\n"+ "Percepción térmica: "
-                     + str(info["main"]["feels_like"]),
+                     + str(info["main"]["feels_like"])+ "°C",
                      justify= "center",bg="pink" ,
                      fg="blue", font=("Purisa",18))
                 climaLabel.place(x=15,y=140)      
@@ -87,7 +76,7 @@ class Interfaz(ttk.Frame):
 
 
 raiz=tk.Tk()
-ciudades = Climas()
-lista = ciudades.arregloNombres()
+aeropuertos = Climas()
+lista = aeropuertos.arregloNombres()
 objeto = Interfaz(raiz, lista)
 objeto.mainloop()
