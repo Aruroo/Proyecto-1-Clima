@@ -26,16 +26,12 @@ class Interfaz(ttk.Frame):
             raiz.config(bg="light blue")
             cuadro=Frame(width=650, height= 500,bd=10,relief="groove",bg="light blue")
             cuadro.pack()
-            self.cuadro = cuadro
-            #Label de Ciudad de destino
             ciudadOrigenLabel=Label(cuadro, text='Seleccione la ciudad para consultar su clima:',
                          justify="center",bg="light blue", fg='blue', font=("C059", 18))
             ciudadOrigenLabel.place(x=15, y=5)
-            #Creando un menú desplegable
-            self.desplegable = ttk.Combobox(state="readonly", values=lista)
-            self.desplegable.bind("<<ComboboxSelected>>",self.__muestraEscogido)
-            self.desplegable.place(x=50,y=70)
-            #un boton para crear un label con la información solicitada
+            self.__desplegable = ttk.Combobox(state="readonly", values=lista)
+            self.__desplegable.bind("<<ComboboxSelected>>",self.__muestraEscogido)
+            self.__desplegable.place(x=50,y=70)
         except TypeError:
             print("raiz no es un tt.Tk() o lista no es una lista")
 
