@@ -9,7 +9,7 @@ class LectorIATA():
         
         iata = String - El código IATA de la ciudad.
         """
-        self.__ruta = "IATACodes.json"
+        self.__ruta = "../datos/IATACodes.json"
 
         with open(self.__ruta) as file:
             archivoIATA = json.load(file)

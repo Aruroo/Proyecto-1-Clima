@@ -18,7 +18,7 @@ class Climas ():
         #Variable que evita añadir la primera linea del archivo csv.
         b = False
 
-        with open('dataset1.csv') as f:
+        with open('../datos/dataset1.csv') as f:
             """
                 Realiza el almacenamiento de los nombres de las ciudades en un conjunto para evitar
                 repeticiones.
@@ -35,7 +35,7 @@ class Climas ():
 
             b = False
 
-        with open('dataset1.csv') as f:
+        with open('../datos/dataset1.csv') as f:
             """
                 Realiza el almacenamiento de datos en el diccionario con base en el conjunto obtenido.
             """
