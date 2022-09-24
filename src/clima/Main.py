@@ -1,4 +1,3 @@
-from Peticion import Peticion
 from Climas import Climas
 from Interfaz import Interfaz
 import tkinter as tk
