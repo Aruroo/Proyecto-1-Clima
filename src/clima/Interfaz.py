@@ -65,7 +65,7 @@ class Interfaz(ttk.Frame):
             escogido = self.__desplegable.get()
             messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
             climas =Climas()
-            ciudad = climas.buscaCiudad(escogido)
+            ciudad = climas.buscaAeropuerto(escogido)
             boton = ttk.Button(text="mostrar clima", command=partial(self.__muestraClima,
                                          self, ciudad.latitud,ciudad.altitud, escogido))
             boton.place(x=280,y=65)

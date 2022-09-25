@@ -20,7 +20,7 @@ class Climas ():
         self.aeropuertos = aeropuertos
         sinPrimeraLinea = False
 
-        with open('dataset1.csv') as f:
+        with open('../datos/dataset1.csv') as f:
             lectorcsv = csv.reader(f)
             conjunto = {}
             conjunto = set()
@@ -33,7 +33,7 @@ class Climas ():
 
             sinPrimeraLinea = False
 
-        with open('dataset1.csv') as f:
+        with open('../datos/dataset1.csv') as f:
             lectorcsv = csv.reader(f)
             for fila in lectorcsv:
                 if sinPrimeraLinea:
@@ -68,3 +68,18 @@ class Climas ():
             Devuelve un arreglo con los nombres de los aeropuertos.
         """
         return self.aeropuertos["nombres"]
+
+    def arregloAeropuertos(self):
+        """
+            Devuelve un arreglo con los objetos de tipo Aeropuerto.
+        """
+        return self.aeropuertos["coordenadas"]
+
+    def buscaAeropuerto(self,aeropuerto):
+        """
+            Función que se encarga de realizar la búsqueda en el arreglo de objetos
+            de tipo Aeropuerto con base en el nombre o IATA pasado como parámetro.
+        """
+        for i in range(1, len(self.arregloAeropuertos())):
+            if aeropuerto == self.arregloNombres()[i]:
+                return self.arregloAeropuertos()[i]

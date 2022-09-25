@@ -19,16 +19,13 @@ class Peticion:
         self.cantidadPeticiones = 0
         try:
             llave = self.__leeLlave()
-        except FileNotFoundError:
-            print("archivo de llave no encontrado")
-        try:
             diccionarioClimaCiudad = self.__solicitaInfo(llave)
             ruta = "../caché/peticiones/"+ciudadNombre+".json"
             existeArchivo = os.path.isfile(ruta)
             if(existeArchivo):
                 with open(ruta) as file:
                     info = json.load(file)
-                    if(self.__necesitaActualizarse(self,info)):
+                    if(self.__necesitaActualizarse(info)):
                         self.__escribeFechaActual(diccionarioClimaCiudad)
                         self.__creaArchivo(diccionarioClimaCiudad, ruta)
             else:
@@ -113,3 +110,4 @@ class Peticion:
         if(minuto > fechas["minuto"]+5):
             return True
         return False  
+       
