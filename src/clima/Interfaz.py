@@ -63,12 +63,12 @@ class Interfaz(ttk.Frame):
             Muestra el elemento escogido en una ventanita, además, crea un botón.
             """
             escogido = self.__desplegable.get()
-            messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
             climas =Climas()
             ciudad = climas.buscaAeropuerto(escogido)
             boton = ttk.Button(text="mostrar clima", command=partial(self.__muestraClima,
                                          self, ciudad.latitud,ciudad.altitud, escogido))
             boton.place(x=280,y=65)
+            messagebox.showinfo(title="Selección",message="Ha seleccionado: "+escogido)
 
     def __muestraClima(self,event, lat:float,lon:float, nombre):
         """

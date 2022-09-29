@@ -7,9 +7,9 @@ class LectorIATA():
             Clase para obtener el nombre del aeropuerto dada su clave IATA.
             iata = String - El código IATA del aeropuerto.
         """
-        self.__ruta = "../datos/IATACodes.json"
+        ruta = "../datos/IATACodes.json"
 
-        with open(self.__ruta) as file:
+        with open(ruta) as file:
             archivoIATA = json.load(file)
             try:
                 aeropuertoDatos = archivoIATA[iata]
