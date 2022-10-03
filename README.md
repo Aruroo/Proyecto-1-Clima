@@ -20,7 +20,7 @@ Requisitos:
 
   En windows se encuentra instalada por defecto con python.
 
-  Creación de un archivo key.txt :
+  Creación de un una llave de acceso :
   
   Para utilizar este programa, es necesario contar con una llave de acceso en Openweather, 
   y por ello necesita registrarse en:
@@ -40,9 +40,13 @@ Requisitos:
  
  Ejecute el siguiente comando en una terminal:
  
- python3 src/clima/Interfaz.py
+ python3 src/clima/Main.py
  
+Créditos:
 
+IATACodes.json fue recuperado de https://github.com/dholliday3/airport_json
+
+Créditos a @dholliday3
 
 Equipo:
 

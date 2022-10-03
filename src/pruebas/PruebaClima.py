@@ -1,17 +1,7 @@
 import unittest
 import csv
-from Ciudad import Ciudad
-from Climas import Climas
+from clima import Climas
 class PruebaClima(unittest.TestCase):
-
-    def pruebaConstructorCiudad(self):
-        """
-        Prueba que el constructor de la ciudad sea correcto.
-        """
-        ciudad = Ciudad('ciudad', 90.0, -10.0)
-        self.assertEqual(ciudad.nombre, 'ciudad', 'Diferencia entre nombres')
-        self.assertEqual(ciudad.latitud, 90.0, 'Diferencia entre latitudes')
-        self.assertEqual(ciudad.altitud, -10.0, 'Diferencia entre altitudes')
 
     def pruebaClima1(self):
         """
@@ -19,7 +9,6 @@ class PruebaClima(unittest.TestCase):
         """
         b = False
         with open('dataset1.csv') as f:
-            #Almacenamiento de los nombres de las ciudades en un conjunto.
             reader = csv.reader(f)
             conjunto = {}
             conjunto = set()
