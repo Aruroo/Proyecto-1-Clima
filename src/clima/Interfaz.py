@@ -60,7 +60,7 @@ class Interfaz(ttk.Frame):
 
     def __muestraEscogido(self,event):
             """
-            Muestra el elemento escogido en una ventanita, además, crea un botón.
+            Muestra el elemento escogido en una ventanita, además, crea un botón. 
             """
             escogido = self.__desplegable.get()
             climas =Climas()
