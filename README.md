@@ -32,6 +32,8 @@ Requisitos:
   
   https://home.openweathermap.org/api_keys
   
+  Cree un archivo llamado "key.txt" en la ruta src/clima/
+  
   Posteriormente, copie y pegue dicha llave en el archivo que se encuentra en src/clima/key.txt
  
  Ejecutando el programa:
