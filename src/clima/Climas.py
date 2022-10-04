@@ -54,8 +54,8 @@ class Climas ():
             Realiza el almacenamiento de las IATA's de los aeropuertos para devolver
             un conjunto y evitar repeticiones de IATA's.
         """
-        f = open(self.archivo)
-        lectorcsv = csv.reader(f)
+        archivoLect = open(self.archivo)
+        lectorcsv = csv.reader(archivoLect)
         conjunto = {}
         conjunto = set()
 
