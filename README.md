@@ -32,7 +32,7 @@ Requisitos:
   
   https://home.openweathermap.org/api_keys
   
-  Posteriormente, copie y pegue dicha llave en el archivo que se encuentra en src/clima/key.txt
+  Posteriormente, copie y pegue dicha llave en el archivo que se encuentra en src/datos/key.txt
  
  Ejecutando el programa:
  
