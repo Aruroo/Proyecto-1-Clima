@@ -4,14 +4,14 @@ import requests
 from datetime import datetime
 class Peticion:
 
-    def __init__(self, lat:float, lon:float, ciudadNombre):
+    def __init__(self, lat:float, lon:float, AeropuertoNombre):
         """Método que hace la petición a OpenWheather
 
-            alt = float -la altitud de la ciudad a la que queremos solicitar el clima
+            alt = float -la altitud del aeropuerto a la que queremos solicitar el clima
 
-            long = float -la longitud de la ciudad a la que queremos solicitar el clima
+            long = float -la longitud del aeropuerto a la que queremos solicitar el clima
 
-            ciudadNombre = string - la ciudad correspondiente a las coordenadas dadas
+            aeropuertoNombre = string - el aeropuerto correspondiente a las coordenadas dadas
 
         """
         try:
@@ -25,8 +25,8 @@ class Peticion:
             #Solicitando información
             url = 'https://api.openweathermap.org/data/2.5/weather?lat='+str(lat)+'&lon='+str(lon)+'&units=metric&lang=es&appid='+llave
             respuesta = requests.get(url)
-            diccionarioCiudad = respuesta.json()
-            ruta = "../caché/"+ciudadNombre+".json"
+            diccionarioAeropuerto = respuesta.json()
+            ruta = "../caché/"+AeropuertoNombre+".json"
             #checando si el archivo existe en el caché:
             existeArchivo = os.path.isfile(ruta)
             if(existeArchivo):
@@ -35,30 +35,30 @@ class Peticion:
                     #Actualizamos el caché cada 5 minutos
                     if(Peticion.__necesitaActualizarse(self, fechas=info)):
                         fecha = datetime.now()
-                        diccionarioCiudad["ano"] = fecha.year
-                        diccionarioCiudad["mes"] = fecha.month                    
-                        diccionarioCiudad["dia"] =fecha.day
-                        diccionarioCiudad["hora"] =fecha.hour
-                        diccionarioCiudad["minuto"] =fecha.minute
-                        self.__creaArchivo(diccionarioCiudad, ruta)
+                        diccionarioAeropuerto["ano"] = fecha.year
+                        diccionarioAeropuerto["mes"] = fecha.month
+                        diccionarioAeropuerto["dia"] =fecha.day
+                        diccionarioAeropuerto["hora"] =fecha.hour
+                        diccionarioAeropuerto["minuto"] =fecha.minute
+                        self.__creaArchivo(diccionarioAeropuerto, ruta)
             else:
                 # Checando fecha y hora para saber cuando almacenar en el caché:
                 fecha = datetime.now()
-                diccionarioCiudad["ano"] = fecha.year
-                diccionarioCiudad["mes"] = fecha.month                    
-                diccionarioCiudad["dia"] =fecha.day
-                diccionarioCiudad["hora"] =fecha.hour
-                diccionarioCiudad["minuto"] =fecha.minute
+                diccionarioAeropuerto["ano"] = fecha.year
+                diccionarioAeropuerto["mes"] = fecha.month
+                diccionarioAeropuerto["dia"] =fecha.day
+                diccionarioAeropuerto["hora"] =fecha.hour
+                diccionarioAeropuerto["minuto"] =fecha.minute
                 #guardamos la información que nos devolvió la request en un archivo
-                self.__creaArchivo(diccionarioCiudad, ruta)
+                self.__creaArchivo(diccionarioAeropuerto, ruta)
 
         except ConnectionError:
             print("solicitud rechazada")
 
-    def __creaArchivo(self,diccionarioCiudad,ruta):
+    def __creaArchivo(self,diccionarioAeropuerto,ruta):
         """Funcion para crear archivo"""
         with open(ruta, "w") as i:
-                    json.dump(diccionarioCiudad,i, indent=2)
+                    json.dump(diccionarioAeropuerto,i, indent=2)
 
     def __necesitaActualizarse(self, fechas:dict):
         """
@@ -85,4 +85,4 @@ class Peticion:
             return True
         if(minuto > fechas["minuto"]+5):
             return True
-        return False  
+        return False
