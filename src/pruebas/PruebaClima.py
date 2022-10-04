@@ -5,19 +5,19 @@ class PruebaClima(unittest.TestCase):
 
     def pruebaClima1(self):
         """
-        Prueba que el diccionario no contenga elementos repetidos.
+            Prueba que el diccionario no contenga elementos repetidos.
         """
-        b = False
+        sinPrimeraLinea = False
         with open('dataset1.csv') as f:
-            reader = csv.reader(f)
+            lector = csv.reader(f)
             conjunto = {}
             conjunto = set()
 
-            for row1 in reader:
-                if b:
-                    conjunto.add(row1[0])
-                    conjunto.add(row1[1])
-                b = True
+            for fila1 in lector:
+                if sinPrimeraLinea:
+                    conjunto.add(fila1[0])
+                    conjunto.add(fila1[1])
+                sinPrimeraLinea = True
 
         conjuntocopia = conjunto.copy()
         climas = Climas()
@@ -33,7 +33,7 @@ class PruebaClima(unittest.TestCase):
 
         self.assertEqual(len(arreglo1), 0, 'El arreglo de nombres no quedó vacío o hay elementos repetidos')
 
-        arreglo2 = climas.arregloCiudades()
+        arreglo2 = climas.arregloAeropuertos()
         while len(arreglo2) != 0:
             if len(conjuntocopia) == 0:
                 break
@@ -43,12 +43,13 @@ class PruebaClima(unittest.TestCase):
                     arreglo2.remove(elemento)
 
 
-        self.assertEqual(len(arreglo2), 0, 'El arreglo de objetos tipo Ciudad no quedó vacío o hay elementos repetidos')
+        self.assertEqual(len(arreglo2), 0, 'El arreglo de objetos de tipo Aeropuerto no quedó vacío o hay elementos repetidos')
 
-    def pruebaBuscaCiudad(self):
+    def testBuscaAeropuerto(self):
         """
-        Prueba que la función de buscaCiudad() no devuelva algo al pasarle como parmámetro una ciudad que no está dentro del diccionario.
+            Prueba que la función de buscaAeropuerto() no devuelva algo al pasarle como
+            parámetro un aeropuerto que no está dentro del diccionario.
         """
         climas = Climas()
-        resultado = climas.buscaCiudad('...')
+        resultado = climas.buscaAeropuerto('...')
         self.assertEqual(resultado, None)

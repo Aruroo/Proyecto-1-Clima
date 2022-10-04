@@ -11,44 +11,31 @@ class Climas ():
             y coordenada altitud.
         """
         aeropuertos = {
-
             "nombres": [],
-
             "coordenadas": []
         }
-
         self.aeropuertos = aeropuertos
         sinPrimeraLinea = False
+        archivo = '../datos/dataset1.csv'
+        self.archivo = archivo
+        self.sinPrimeraLinea = sinPrimeraLinea
+        conjunto = {}
+        conjunto = set()
+        conjunto = self.conjuntoNombres()
 
-        with open('../datos/dataset1.csv') as f:
-            lectorcsv = csv.reader(f)
-            conjunto = {}
-            conjunto = set()
-
-            for fila in lectorcsv:
-                if sinPrimeraLinea:
-                    conjunto.add(fila[0])
-                    conjunto.add(fila[1])
-                sinPrimeraLinea = True
-
-            sinPrimeraLinea = False
-
-        with open('../datos/dataset1.csv') as f:
+        with open(archivo) as f:
             lectorcsv = csv.reader(f)
             for fila in lectorcsv:
-                if sinPrimeraLinea:
+                if self.sinPrimeraLinea:
                     if fila[0] in conjunto:
                         lector = LectorIATA(fila[0])
                         nombreAeropuerto = lector.devuelveNombre()
-
                         if nombreAeropuerto != None:
                             aeropuertos["nombres"].append(fila[0] + ' (' + nombreAeropuerto + ')')
                         else:
                             aeropuertos["nombres"].append(fila[0])
-
                         aeropuertos["coordenadas"].append(Aeropuerto.Aeropuerto(fila[0], fila[2], fila[3]))
                         conjunto.discard(fila[0])
-
                     if fila[1] in conjunto:
 
                         lector = LectorIATA(fila[1])
@@ -57,11 +44,30 @@ class Climas ():
                             aeropuertos["nombres"].append(fila[1] + ' (' + nombreAeropuerto + ')')
                         else:
                             aeropuertos["nombres"].append(fila[1])
-
                         aeropuertos["coordenadas"].append(Aeropuerto.Aeropuerto(fila[1], fila[4], fila[5]))
                         conjunto.discard(fila[1])
 
-                sinPrimeraLinea = True
+                self.sinPrimeraLinea = True
+
+    def conjuntoNombres(self):
+        """
+            Realiza el almacenamiento de las IATA's de los aeropuertos para devolver
+            un conjunto y evitar repeticiones de IATA's.
+        """
+        f = open(self.archivo)
+        lectorcsv = csv.reader(f)
+        conjunto = {}
+        conjunto = set()
+
+        for fila in lectorcsv:
+            if self.sinPrimeraLinea:
+                conjunto.add(fila[0])
+                conjunto.add(fila[1])
+            self.sinPrimeraLinea = True
+
+        self.sinPrimeraLinea = False
+
+        return conjunto
 
     def arregloNombres(self):
         """

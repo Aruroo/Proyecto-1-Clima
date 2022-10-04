@@ -72,7 +72,7 @@ class Interfaz(ttk.Frame):
 
     def __muestraClima(self,event, lat:float,lon:float, nombre):
         """
-        Despliega un label con el clima de la ciudad solicitada
+        Despliega un label con el clima del aeropuerto solicitado
         """
         try:
             solicitud = Peticion(lat,lon,nombre)

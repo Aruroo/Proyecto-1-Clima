@@ -4,14 +4,14 @@ import requests
 from datetime import datetime
 class Peticion:
 
-    def __init__(self, lat:float, lon:float, ciudadNombre):
+    def __init__(self, lat:float, lon:float, AeropuertoNombre):
         """Método que hace la petición a OpenWheather
 
-            alt = float -la altitud de la ciudad a la que queremos solicitar el clima
+            alt = float -la altitud del aeropuerto a la que queremos solicitar el clima
 
             lon = float -la longitud de la ciudad a la que queremos solicitar el clima
 
-            ciudadNombre = string - la ciudad correspondiente a las coordenadas dadas
+            aeropuertoNombre = string - el aeropuerto correspondiente a las coordenadas dadas
 
         """
         self.__lat = lat
@@ -20,7 +20,7 @@ class Peticion:
         try:
             llave = self.__leeLlave()
             diccionarioClimaCiudad = self.__solicitaInfo(llave)
-            ruta = "../caché/peticiones/"+ciudadNombre+".json"
+            ruta = "../caché/peticiones/"+AeropuertoNombre+".json"
             existeArchivo = os.path.isfile(ruta)
             if(existeArchivo):
                 with open(ruta) as file:
@@ -68,7 +68,7 @@ class Peticion:
         diccionarioCiudad["hora"] =fecha.hour
         diccionarioCiudad["minuto"] =fecha.minute
 
-    def __creaArchivo(self,diccionarioCiudad,ruta):
+    def __creaArchivo(self,diccionarioAeropuerto,ruta):
         """Funcion para crear archivo
 
             diccionarioCiudad = diccionario - el diccionario con la informacion de la ciudad
@@ -80,7 +80,7 @@ class Peticion:
             return
         self.cantidadPeticiones= self.cantidadPeticiones+1
         with open(ruta, "w") as i:
-                    json.dump(diccionarioCiudad,i, indent=2)
+                    json.dump(diccionarioAeropuerto,i, indent=2)
 
     def __necesitaActualizarse(self, fechas:dict):
         """
