@@ -36,9 +36,9 @@ Requisitos:
  
  Ejecutando el programa:
  
- Ejecute el siguiente comando en una terminal:
+ Ejecute el siguiente comando en una terminal a la altura de src/clima:
  
- python3 src/clima/Main.py
+ python3 Main.py
  
 Créditos:
 
